@@ -29,3 +29,11 @@ jobs:
 
             - name: Lint
               run: npm run lint
+
+            - name: Commit any changes
+              run: |
+                  git config user.name "GitHub Actions Bot"
+                  git config user.email "<>"
+                  git add .
+                  git commit -m "Apply linter."
+                  git push
