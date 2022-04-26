@@ -9,7 +9,9 @@ jobs:
         name: Cache and Lint
         runs-on: ubuntu-latest
         steps:
+            - name: Checkout Repo
             - uses: actions/checkout@v3
+
             - name: Cache npm packages
               id: cache-npm-deps
 
