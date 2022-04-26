@@ -14,6 +14,8 @@ app.use(cors());
 
 app.use(router);
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   logging.info(NAMESPACE, `Port is running on ${PORT}`);
 });
+
+export default server;
