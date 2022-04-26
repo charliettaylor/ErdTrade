@@ -1,8 +1,9 @@
+/* eslint-disable no-console */
 const getTimeStamp = (): string => {
   return new Date().toISOString();
 };
 
-const info = (namespace: string, message: string, object?: any) => {
+const info = (namespace: string, message: string, object?: unknown) => {
   if (object) {
     console.log(`[${getTimeStamp()}] [INFO] [${namespace}] ${message}`, object);
   } else {
@@ -10,7 +11,7 @@ const info = (namespace: string, message: string, object?: any) => {
   }
 };
 
-const warn = (namespace: string, message: string, object?: any) => {
+const warn = (namespace: string, message: string, object?: unknown) => {
   if (object) {
     console.warn(`[${getTimeStamp()}] [WARN] [${namespace}] ${message}`, object);
   } else {
@@ -18,7 +19,7 @@ const warn = (namespace: string, message: string, object?: any) => {
   }
 };
 
-const debug = (namespace: string, message: string, object?: any) => {
+const debug = (namespace: string, message: string, object?: unknown) => {
   if (object) {
     console.debug(`[${getTimeStamp()}] [DEBUG] [${namespace}] ${message}`, object);
   } else {
@@ -26,7 +27,7 @@ const debug = (namespace: string, message: string, object?: any) => {
   }
 };
 
-const error = (namespace: string, message: string, object?: any) => {
+const error = (namespace: string, message: string, object?: unknown) => {
   if (object) {
     console.error(`[${getTimeStamp()}] [ERROR] [${namespace}] ${message}`, object);
   } else {
