@@ -1,10 +1,10 @@
 {
-  "name": "erd-tree-api",
+  "name": "erdtrade",
   "version": "1.0.0",
-  "description": "API for ErdTree website",
-  "main": "server.ts",
+  "description": "ErdTrade mono-repo.",
+  "main": "./Backend/server.ts",
   "scripts": {
-    "start": "tsc --build && node ./build/server.js",
+    "run-server": "tsc --build && node ./build/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -28,7 +28,6 @@
     "graphql-request": "^4.2.0"
   },
   "devDependencies": {
-    "@types/axios": "^0.14.0",
     "@types/cors": "^2.8.12"
   }
 }
