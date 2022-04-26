@@ -1,0 +1,33 @@
+name: Cache and Lint
+
+on: 
+  pull_request:
+    branches: 
+     -main
+
+obs:
+    cache-and-lint:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Cache npm packages
+              id: cache-npm-deps
+
+            - uses: actions/cache@v3
+              with:
+                  path: ~/.npm
+                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os}}-node-
+
+           - name: Install dependencies
+             id: install-npm-deps
+             if: steps.cache-npm-deps.outputs.cache-hit != 'true'
+             run: npm install
+          
+           - name: Prettier
+             run: npm run prettier
+          
+           - name: Lint
+             run: npm run lint
