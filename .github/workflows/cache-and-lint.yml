@@ -9,25 +9,25 @@ jobs:
         name: Cache and Lint
         runs-on: ubuntu-latest
         steps:
-          - name: Checkout Repo
+            - name: Checkout Repo
             - uses: actions/checkout@v3
 
-          - name: Cache npm packages
-            id: cache-npm-deps
+            - name: Cache npm packages
+              id: cache-npm-deps
             - uses: actions/cache@v3
-            with:
-            path: ~/.npm
-            key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-            restore-keys: |
-              ${{ runner.os}}-node-
+              with:
+              path: ~/.npm
+              key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+              restore-keys: |
+                  ${{ runner.os}}-node-
 
-          - name: Install dependencies
-            id: install-npm-deps
-            if: steps.cache-npm-deps.outputs.cache-hit != 'true'
-            run: npm install
+            - name: Install dependencies
+              id: install-npm-deps
+              if: steps.cache-npm-deps.outputs.cache-hit != 'true'
+              run: npm install
 
-          - name: Prettier
-            run: npm run prettier
+            - name: Prettier
+              run: npm run prettier
 
-          - name: Lint
-            run: npm run lint
+            - name: Lint
+              run: npm run lint
