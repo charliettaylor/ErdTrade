@@ -7,8 +7,8 @@
         "run-server": "tsc --build && node ./build/server.js",
         "test": "echo \"Error: no test specified\" && exit 1",
         "prepare": "husky install",
-        "lint": "eslint . --fix",
-        "prettier": "prettier . --w"
+        "lint": "eslint --fix",
+        "prettier": "prettier --w"
     },
     "repository": {
         "type": "git",
