@@ -1,13 +1,16 @@
-name: Cache and Lint
+name: Build
 
 on:
   pull_request:
     branches:
       - main
+  push:
+    branches:
+      - main
 
 jobs:
     main:
-        name: Cache and Lint
+        name: Build
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Repo
@@ -33,6 +36,9 @@ jobs:
 
             - name: Lint
               run: npm run lint
+            
+            - name: Run unit tests
+              run: npm test
 
             - name: Check for file changes
               id: changes
