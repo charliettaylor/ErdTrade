@@ -3,6 +3,6 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   moduleNameMapper: {
-    '@erdtrade/api': '<rootDir>/backend',
+    '@erdtrade/api': '<rootDir>/api',
   },
 };

@@ -62,6 +62,6 @@
         "@erdtrade/types": "common/ts/types",
         "@erdtrade/enums": "common/ts/enums",
         "@erdtrade/interfaces": "common/ts/interfaces",
-        "@erdtrade/api": "backend"
+        "@erdtrade/api": "api"
     }
 }
