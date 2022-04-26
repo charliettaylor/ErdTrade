@@ -1,15 +1,15 @@
-import axios, { AxiosInstance } from 'axios';
+import { gql, GraphQLClient } from 'graphql-request';
 import logging from '../utils/logging';
-import { gql, GraphQLClient, request, Variables } from 'graphql-request';
 
-const NAMESPACE: string = "ERAPI";
+const NAMESPACE = 'ERAPI';
 
 export default class ERApiController {
+  private client: GraphQLClient = new GraphQLClient('https://eldenring.fanapis.com/api/graphql');
 
-    private client: GraphQLClient = new GraphQLClient('https://eldenring.fanapis.com/api/graphql');
+  private graphQL = gql;
 
-    private searchQuery(route: string, name: string) : string {
-        return gql`
+  private searchQuery(route: string, name: string): string {
+    return this.graphQL`
         query get {
             ${route}(search: ${name}) {
                 id,
@@ -18,34 +18,35 @@ export default class ERApiController {
                 description
             }
         }`;
-    }
+  }
 
-    private async makeSearchRequest(route: string, param: string) {
-        try {
-            logging.info(NAMESPACE, `Request made on ${route} for ${param}`);
-            return await this.client.request(this.searchQuery(route, param));
-        } catch (error) {
-            logging.error(NAMESPACE, `Could not search for ${param} in ${route}`);
-            return { error: `Could not search for ${param}` };
-        }
+  private async makeSearchRequest(route: string, param: string) {
+    try {
+      logging.info(NAMESPACE, `Request made on ${route} for ${param}`);
+      return await this.client.request(this.searchQuery(route, param));
+    } catch (error) {
+      logging.error(NAMESPACE, `Could not search for ${param} in ${route}`);
+      return { error: `Could not search for ${param}` };
     }
+  }
 
-    private async makeIdRequest(route: string, query: string) {
-        try {
-            logging.info(NAMESPACE, `Request by ID made on ${route}`);
-            return await this.client.request(query);
-        } catch (error) {
-            logging.error(NAMESPACE, `Could not get ${route} by id`);
-            return { error: `Could not get ${route} by id` };
-        }
+  private async makeIdRequest(route: string, query: string) {
+    try {
+      logging.info(NAMESPACE, `Request by ID made on ${route}`);
+      return await this.client.request(query);
+    } catch (error) {
+      logging.error(NAMESPACE, `Could not get ${route} by id`);
+      return { error: `Could not get ${route} by id` };
     }
+  }
 
-    public async searchArmors(name: string) {
-        return await this.makeSearchRequest('armor', name);
-    }
+  public async searchArmors(name: string) {
+    const armor = await this.makeSearchRequest('armor', name);
+    return armor;
+  }
 
-    public async getArmorsById(id: string) {
-        let query = gql`
+  public async getArmorsById(id: string) {
+    const query = gql`
         query get {
             armor(id: "${id}") {
                 id,
@@ -65,15 +66,17 @@ export default class ERApiController {
             }
         }`;
 
-        return await this.makeIdRequest('armor', query);
-    }
+    const armor = await this.makeIdRequest('armor', query);
+    return armor;
+  }
 
-    public async searchItem(name: string) {
-        return await this.makeSearchRequest('item', name);
-    }
+  public async searchItem(name: string) {
+    const item = await this.makeSearchRequest('item', name);
+    return item;
+  }
 
-    public async getItemById(id: string) {
-        let query = gql`
+  public async getItemById(id: string) {
+    const query = gql`
         query get {
             item(id: "${id}") {
                 id,
@@ -85,15 +88,17 @@ export default class ERApiController {
             }
         }`;
 
-        return await this.makeIdRequest('item', query);
-    }
+    const item = await this.makeIdRequest('item', query);
+    return item;
+  }
 
-    public async searchShields(name: string){
-        return await this.makeSearchRequest('shield', name);
-    }
+  public async searchShields(name: string) {
+    const shield = await this.makeSearchRequest('shield', name);
+    return shield;
+  }
 
-    public async getShieldsById(id: string) {
-        let query = gql`
+  public async getShieldsById(id: string) {
+    const query = gql`
         query get {
             shield(id: "${id}") {
                 id,
@@ -121,15 +126,17 @@ export default class ERApiController {
             }
         }`;
 
-        return await this.makeIdRequest('shield', query);
-    }
+    const shield = await this.makeIdRequest('shield', query);
+    return shield;
+  }
 
-    public async searchWeapons(name: string){
-        return await this.makeSearchRequest('weapon', name);
-    }
+  public async searchWeapons(name: string) {
+    const weapon = await this.makeSearchRequest('weapon', name);
+    return weapon;
+  }
 
-    public async getWeaponsById(id: string) {
-        let query = gql`
+  public async getWeaponsById(id: string) {
+    const query = gql`
         query get {
             weapon(id: "${id}") {
                 id,
@@ -157,7 +164,7 @@ export default class ERApiController {
             }
         }`;
 
-        return await this.makeIdRequest('weapon', query);
-    }
-
+    const weapon = await this.makeIdRequest('weapon', query);
+    return weapon;
+  }
 }

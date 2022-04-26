@@ -1,0 +1,48 @@
+name: Cache and Lint
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+    main:
+        name: Cache and Lint
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Repo
+              uses: actions/checkout@v3
+              with:
+                ref: ${{ github.head_ref }}
+
+            - name: Cache npm packages
+              id: cache-npm-deps
+              uses: actions/cache@v3
+              with:
+                  path: ~/.npm
+                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os}}-node-
+
+            - name: Restore node_modules from cache
+              id: restore-node-modules
+              run: npm ci
+
+            - name: Prettier
+              run: npm run prettier
+
+            - name: Lint
+              run: npm run lint
+
+            - name: Check for file changes
+              id: changes
+              uses: UnicornGlobal/has-changes-action@v1.0.11
+
+            - name: Commit any changes
+              if: steps.changes.outputs.changed == 1
+              run: |
+                  git config user.name "GitHub Actions Bot"
+                  git config user.email "<>"
+                  git add .
+                  git commit -m "Apply linter."
+                  git push

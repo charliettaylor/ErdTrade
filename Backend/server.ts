@@ -1,7 +1,7 @@
-import logging from './utils/logging';
 import express, { Application } from 'express';
-import router from './routes/routes';
 import cors from 'cors';
+import logging from './utils/logging';
+import router from './routes/routes';
 
 const NAMESPACE = 'App';
 
@@ -15,5 +15,5 @@ app.use(cors());
 app.use(router);
 
 app.listen(PORT, () => {
-    logging.info(NAMESPACE, `Port is running on ${PORT}`);
+  logging.info(NAMESPACE, `Port is running on ${PORT}`);
 });

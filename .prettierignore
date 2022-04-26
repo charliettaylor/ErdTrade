@@ -1,0 +1,11 @@
+# Ignore artifacts
+node_modules
+build
+.husky
+.github
+.eslintrrc
+.prettierrc
+
+# Ignore file-types
+*.md
+*.json
