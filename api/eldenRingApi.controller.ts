@@ -1,17 +1,22 @@
+import { Controller, Get, Param, Query } from '@nestjs/common';
+import { AppService } from '../app.service';
 import { gql, GraphQLClient } from 'graphql-request';
-import logging from '../utils/logging';
+import logging from './utils/logging';
+import { ApiParam, ApiTags, ApiResponse, ApiOperation, ApiQuery } from '@nestjs/swagger';
 
 const NAMESPACE = 'ERAPI';
 
+@ApiTags('Elden Ring API')
+@Controller()
 export default class ERApiController {
+  constructor(private readonly appService: AppService) {}
+
   private client: GraphQLClient = new GraphQLClient('https://eldenring.fanapis.com/api/graphql');
 
-  private graphQL = gql;
-
   private searchQuery(route: string, name: string): string {
-    return this.graphQL`
+    return gql`
         query get {
-            ${route}(search: ${name}) {
+            ${route}(search: "${name}") {
                 id,
                 name,
                 image,
@@ -40,12 +45,29 @@ export default class ERApiController {
     }
   }
 
-  public async searchArmors(name: string) {
+  @ApiOperation({ summary: 'Query Armor' })
+  @ApiQuery({
+    name: 'name',
+    description: 'Enter a search query for any armor.',
+    type: String,
+    required: true,
+  })
+  @Get('/armors')
+  public async searchArmors(@Query('name') name: string) {
     const armor = await this.makeSearchRequest('armor', name);
     return armor;
   }
 
-  public async getArmorsById(id: string) {
+  @ApiOperation({ summary: 'Get Armor By ID' })
+  @ApiResponse({ status: 200, description: 'Returns armor object based on ID' })
+  @ApiParam({
+    name: 'id',
+    description: 'Enter the Elden Ring API ID for armor',
+    allowEmptyValue: false,
+    required: true,
+  })
+  @Get('/armors/:id')
+  public async getArmorsById(@Param('id') id: string) {
     const query = gql`
         query get {
             armor(id: "${id}") {
@@ -70,12 +92,29 @@ export default class ERApiController {
     return armor;
   }
 
-  public async searchItem(name: string) {
+  @ApiOperation({ summary: 'Query Items' })
+  @ApiQuery({
+    name: 'name',
+    description: 'Enter a search query for any item.',
+    type: String,
+    required: true,
+  })
+  @Get('/items')
+  public async searchItem(@Query() name: string) {
     const item = await this.makeSearchRequest('item', name);
     return item;
   }
 
-  public async getItemById(id: string) {
+  @ApiOperation({ summary: 'Get Item By ID' })
+  @ApiResponse({ status: 200, description: 'Returns item object based on ID' })
+  @ApiParam({
+    name: 'id',
+    description: 'Enter the Elden Ring API ID for an item',
+    allowEmptyValue: false,
+    required: true,
+  })
+  @Get('/items/:id')
+  public async getItemById(@Param('id') id: string) {
     const query = gql`
         query get {
             item(id: "${id}") {
@@ -92,12 +131,29 @@ export default class ERApiController {
     return item;
   }
 
-  public async searchShields(name: string) {
+  @ApiOperation({ summary: 'Query Shields' })
+  @ApiQuery({
+    name: 'name',
+    description: 'Enter a search query for any shield.',
+    type: String,
+    required: true,
+  })
+  @Get('/shields')
+  public async searchShields(@Query('name') name: string) {
     const shield = await this.makeSearchRequest('shield', name);
     return shield;
   }
 
-  public async getShieldsById(id: string) {
+  @ApiOperation({ summary: 'Get Shield By ID' })
+  @ApiResponse({ status: 200, description: 'Returns shield object based on ID' })
+  @ApiParam({
+    name: 'id',
+    description: 'Enter the Elden Ring API ID for a shield',
+    allowEmptyValue: false,
+    required: true,
+  })
+  @Get('/shields/:id')
+  public async getShieldsById(@Param('id') id: string) {
     const query = gql`
         query get {
             shield(id: "${id}") {
@@ -130,12 +186,29 @@ export default class ERApiController {
     return shield;
   }
 
-  public async searchWeapons(name: string) {
+  @ApiOperation({ summary: 'Query Weapons' })
+  @ApiQuery({
+    name: 'name',
+    description: 'Enter a search query for any weapon.',
+    type: String,
+    required: true,
+  })
+  @Get('/weapons')
+  public async searchWeapons(@Query('name') name: string) {
     const weapon = await this.makeSearchRequest('weapon', name);
     return weapon;
   }
 
-  public async getWeaponsById(id: string) {
+  @ApiOperation({ summary: 'Get Weapon By ID' })
+  @ApiResponse({ status: 200, description: 'Returns weapon object based on ID' })
+  @ApiParam({
+    name: 'id',
+    description: 'Enter the Elden Ring API ID for a weapon',
+    allowEmptyValue: false,
+    required: true,
+  })
+  @Get('/weapons/:id')
+  public async getWeaponsById(@Param('id') id: string) {
     const query = gql`
         query get {
             weapon(id: "${id}") {
