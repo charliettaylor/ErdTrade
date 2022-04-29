@@ -1,15 +1,23 @@
 {
-  "name": "erd-trade",
-  "version": "0.0.1",
-  "private": true,
-  "description": "",
+  "name": "erdtrade",
+  "version": "1.0.0",
+  "description": "ErdTrade mono-repo.",
   "license": "UNLICENSED",
   "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Peekoe/ErdTrade.git"
+    },
+  "bugs": {
+      "url": "https://github.com/Peekoe/ErdTrade/issues"
+  },
+  "homepage": "https://github.com/Peekoe/ErdTrade#readme",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format": "prettier --write \"api/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "prettier": "prettier . --w",
     "start": "nest start",
     "start:debug": "nest start --debug --watch",
     "start:dev": "nest start --watch",
@@ -36,6 +44,9 @@
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     }
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
@@ -81,5 +92,11 @@
     "ts-node": "^10.0.0",
     "tsconfig-paths": "^3.10.1",
     "typescript": "^4.3.5"
+  },
+  "_moduleAliases": {
+    "@erdtrade/types": "common/ts/types",
+    "@erdtrade/enums": "common/ts/enums",
+    "@erdtrade/interfaces": "common/ts/interfaces",
+    "@erdtrade/api": "api"
   }
 }
