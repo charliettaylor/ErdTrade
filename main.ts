@@ -1,9 +1,18 @@
 import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { SwaggerModule, DocumentBuilder, SwaggerCustomOptions } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  const customOptions: SwaggerCustomOptions = {
+    swaggerOptions: {
+      persistAuthorization: true,
+      docExpansion: 'none',
+      tryItOutEnabled: true,
+    },
+    customSiteTitle: 'ErdTrade API',
+  };
 
   const config = new DocumentBuilder()
     .setTitle('ErdTrade API')
@@ -12,7 +21,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api', app, document, customOptions);
 
   await app.listen(3000);
 }

@@ -1,7 +1,6 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
-import { AppService } from '../app.service';
 import { gql, GraphQLClient } from 'graphql-request';
-import logging from './utils/logging';
+import logging from '../utils/logging';
 import { ApiParam, ApiTags, ApiResponse, ApiOperation, ApiQuery } from '@nestjs/swagger';
 
 const NAMESPACE = 'ERAPI';
@@ -9,8 +8,6 @@ const NAMESPACE = 'ERAPI';
 @ApiTags('Elden Ring API')
 @Controller()
 export default class ERApiController {
-  constructor(private readonly appService: AppService) {}
-
   private client: GraphQLClient = new GraphQLClient('https://eldenring.fanapis.com/api/graphql');
 
   private searchQuery(route: string, name: string): string {
@@ -45,7 +42,7 @@ export default class ERApiController {
     }
   }
 
-  @ApiOperation({ summary: 'Query Armor' })
+  @ApiOperation({ operationId: '/armors', summary: 'Query Armor' })
   @ApiQuery({
     name: 'name',
     description: 'Enter a search query for any armor.',
@@ -58,7 +55,7 @@ export default class ERApiController {
     return armor;
   }
 
-  @ApiOperation({ summary: 'Get Armor By ID' })
+  @ApiOperation({ operationId: '/armors/:id', summary: 'Get Armor By ID' })
   @ApiResponse({ status: 200, description: 'Returns armor object based on ID' })
   @ApiParam({
     name: 'id',
@@ -92,7 +89,7 @@ export default class ERApiController {
     return armor;
   }
 
-  @ApiOperation({ summary: 'Query Items' })
+  @ApiOperation({ operationId: '/items', summary: 'Query Items' })
   @ApiQuery({
     name: 'name',
     description: 'Enter a search query for any item.',
@@ -105,7 +102,7 @@ export default class ERApiController {
     return item;
   }
 
-  @ApiOperation({ summary: 'Get Item By ID' })
+  @ApiOperation({ operationId: '/items/:id', summary: 'Get Item By ID' })
   @ApiResponse({ status: 200, description: 'Returns item object based on ID' })
   @ApiParam({
     name: 'id',
@@ -131,7 +128,7 @@ export default class ERApiController {
     return item;
   }
 
-  @ApiOperation({ summary: 'Query Shields' })
+  @ApiOperation({ operationId: '/shields', summary: 'Query Shields' })
   @ApiQuery({
     name: 'name',
     description: 'Enter a search query for any shield.',
@@ -144,7 +141,7 @@ export default class ERApiController {
     return shield;
   }
 
-  @ApiOperation({ summary: 'Get Shield By ID' })
+  @ApiOperation({ operationId: '/shields/:id', summary: 'Get Shield By ID' })
   @ApiResponse({ status: 200, description: 'Returns shield object based on ID' })
   @ApiParam({
     name: 'id',
@@ -186,7 +183,7 @@ export default class ERApiController {
     return shield;
   }
 
-  @ApiOperation({ summary: 'Query Weapons' })
+  @ApiOperation({ operationId: '/weapons', summary: 'Query Weapons' })
   @ApiQuery({
     name: 'name',
     description: 'Enter a search query for any weapon.',
@@ -199,7 +196,7 @@ export default class ERApiController {
     return weapon;
   }
 
-  @ApiOperation({ summary: 'Get Weapon By ID' })
+  @ApiOperation({ operationId: '/weapons/:id', summary: 'Get Weapon By ID' })
   @ApiResponse({ status: 200, description: 'Returns weapon object based on ID' })
   @ApiParam({
     name: 'id',
