@@ -37,8 +37,8 @@ export default class ERApiController {
       logging.info(NAMESPACE, `Request by ID made on ${route}`);
       return await this.client.request(query);
     } catch (error) {
-      logging.error(NAMESPACE, `Could not get ${route} by id`);
-      return { error: `Could not get ${route} by id` };
+      logging.error(NAMESPACE, `Could not get ${route} by ID`);
+      return { error: `Could not find ${route} by ID` };
     }
   }
 
@@ -181,6 +181,61 @@ export default class ERApiController {
 
     const shield = await this.makeIdRequest('shield', query);
     return shield;
+  }
+
+  @ApiOperation({ operationId: '/talismans', summary: 'Query Talismans' })
+  @ApiQuery({
+    name: 'name',
+    description: 'Enter a search query for any talisman.',
+    type: String,
+    required: true,
+  })
+  @Get('/talismans')
+  public async searchTalismans(@Query('name') name: string) {
+    const talisman = await this.makeSearchRequest('talisman', name);
+    return talisman;
+  }
+
+  @ApiOperation({ operationId: '/talismans/:id', summary: 'Get Talisman By ID' })
+  @ApiResponse({ status: 200, description: 'Returns talisman object based on ID' })
+  @ApiParam({
+    name: 'id',
+    description: 'Enter the Elden Ring API ID for a talisman.',
+    allowEmptyValue: false,
+    required: true,
+  })
+  @Get('/talismans/:id')
+  public async getTalismansById(@Param('id') id: string) {
+    const query = gql`
+        query get {
+            talisman(id: "${id}") {
+                id,
+                name,
+                image,
+                description,
+                category,
+                weight,
+                attack{
+                    name,
+                    amount
+                },
+                defence{
+                    name,
+                    amount
+                },
+                requiredAttributes{
+                    name,
+                    amount
+                },
+                scalesWith{
+                    name,
+                    scaling
+                }
+            }
+        }`;
+
+    const talisman = await this.makeIdRequest('talisman', query);
+    return talisman;
   }
 
   @ApiOperation({ operationId: '/weapons', summary: 'Query Weapons' })
