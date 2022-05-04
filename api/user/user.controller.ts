@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import UserService from './user.service';
 import { ApiParam, ApiTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
 
