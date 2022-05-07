@@ -1,5 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import UserService from './user.service';
+import { UserService } from './user.service';
 import { ApiParam, ApiTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
 
 @ApiTags('User')
@@ -16,7 +16,7 @@ export default class UserController {
     required: true,
   })
   @Get('/:id')
-  public getUser(@Param('id') id: string) {
-    return this.userService.getUser(id);
+  public getUserById(@Param('id') id: number) {
+    return this.userService.user({ id });
   }
 }
