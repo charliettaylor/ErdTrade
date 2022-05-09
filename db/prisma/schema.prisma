@@ -78,3 +78,11 @@ model Weapons {
   category String
   weight Float
 }
+
+model Posts {
+  id String @id
+  title String
+  description String
+  created DateTime
+  modified DateTime
+}
