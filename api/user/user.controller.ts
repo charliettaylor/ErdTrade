@@ -1,6 +1,25 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
-import { ApiParam, ApiTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
+import {
+  ApiParam,
+  ApiProperty,
+  ApiTags,
+  ApiResponse,
+  ApiOperation,
+  ApiBody,
+} from '@nestjs/swagger';
+import { User } from '@prisma/client';
+
+class CreateUserDto {
+  @ApiProperty()
+  username = 'string';
+
+  @ApiProperty()
+  email = 'string';
+
+  @ApiProperty()
+  password = 'string';
+}
 
 @ApiTags('User')
 @Controller('/user')
@@ -18,5 +37,20 @@ export class UserController {
   @Get('/:id')
   public getUserById(@Param('id') id: number) {
     return this.userService.user({ id });
+  }
+
+  @ApiOperation({ summary: 'Create New User' })
+  @ApiResponse({ status: 200, description: 'Successfuly created user' })
+  @ApiBody({
+    type: CreateUserDto,
+    description: 'Info about new user',
+    required: true,
+    isArray: false,
+  })
+  @Post()
+  async signupUser(
+    @Body() userData: { username: string; email: string; password: string }
+  ): Promise<User> {
+    return this.userService.createUser(userData);
   }
 }
