@@ -13,7 +13,10 @@ const info = (namespace: string, message: string, object?: unknown) => {
 
 const warn = (namespace: string, message: string, object?: unknown) => {
   if (object) {
-    console.warn(`[${getTimeStamp()}] [WARN] [${namespace}] ${message}`, object);
+    console.warn(
+      `[${getTimeStamp()}] [WARN] [${namespace}] ${message}`,
+      object,
+    );
   } else {
     console.warn(`[${getTimeStamp()}] [WARN] [${namespace}] ${message}`);
   }
@@ -21,7 +24,10 @@ const warn = (namespace: string, message: string, object?: unknown) => {
 
 const debug = (namespace: string, message: string, object?: unknown) => {
   if (object) {
-    console.debug(`[${getTimeStamp()}] [DEBUG] [${namespace}] ${message}`, object);
+    console.debug(
+      `[${getTimeStamp()}] [DEBUG] [${namespace}] ${message}`,
+      object,
+    );
   } else {
     console.debug(`[${getTimeStamp()}] [DEBUG] [${namespace}] ${message}`);
   }
@@ -29,7 +35,10 @@ const debug = (namespace: string, message: string, object?: unknown) => {
 
 const error = (namespace: string, message: string, object?: unknown) => {
   if (object) {
-    console.error(`[${getTimeStamp()}] [ERROR] [${namespace}] ${message}`, object);
+    console.error(
+      `[${getTimeStamp()}] [ERROR] [${namespace}] ${message}`,
+      object,
+    );
   } else {
     console.error(`[${getTimeStamp()}] [ERROR] [${namespace}] ${message}`);
   }

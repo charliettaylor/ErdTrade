@@ -1,0 +1,41 @@
+services:
+  erd-api:
+    container_name: erd-api
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3000:${SERVER_PORT}
+    environment:
+      SERVER_PORT: ${SERVER_PORT}
+      DATABASE_URL: ${DATABASE_URL}
+    depends_on:
+      - erd-db
+  erd-db:
+    image: postgres
+    container_name: erd-db
+    restart: always
+    ports:
+      - 54321:5432
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  erd-db-admin:
+    image: dpage/pgadmin4
+    container_name: erd-db-admin
+    restart: always
+    ports:
+      - 5050:${PGADMIN_LISTEN_PORT}
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_LISTEN_PORT: ${PGADMIN_LISTEN_PORT}
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  db_data:
+  pgadmin_data:

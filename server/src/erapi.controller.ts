@@ -1,14 +1,22 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { gql, GraphQLClient } from 'graphql-request';
 import logging from '../utils/logging';
-import { ApiParam, ApiTags, ApiResponse, ApiOperation, ApiQuery } from '@nestjs/swagger';
+import {
+  ApiParam,
+  ApiTags,
+  ApiResponse,
+  ApiOperation,
+  ApiQuery,
+} from '@nestjs/swagger';
 
 const NAMESPACE = 'ERAPI';
 
 @ApiTags('Elden Ring API')
 @Controller()
 export default class ERApiController {
-  private client: GraphQLClient = new GraphQLClient('https://eldenring.fanapis.com/api/graphql');
+  private client: GraphQLClient = new GraphQLClient(
+    'https://eldenring.fanapis.com/api/graphql',
+  );
 
   private searchQuery(route: string, name: string): string {
     return gql`
@@ -142,7 +150,10 @@ export default class ERApiController {
   }
 
   @ApiOperation({ operationId: '/shields/:id', summary: 'Get Shield By ID' })
-  @ApiResponse({ status: 200, description: 'Returns shield object based on ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'Returns shield object based on ID',
+  })
   @ApiParam({
     name: 'id',
     description: 'Enter the Elden Ring API ID for a shield',
@@ -196,8 +207,14 @@ export default class ERApiController {
     return talisman;
   }
 
-  @ApiOperation({ operationId: '/talismans/:id', summary: 'Get Talisman By ID' })
-  @ApiResponse({ status: 200, description: 'Returns talisman object based on ID' })
+  @ApiOperation({
+    operationId: '/talismans/:id',
+    summary: 'Get Talisman By ID',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Returns talisman object based on ID',
+  })
   @ApiParam({
     name: 'id',
     description: 'Enter the Elden Ring API ID for a talisman.',
@@ -252,7 +269,10 @@ export default class ERApiController {
   }
 
   @ApiOperation({ operationId: '/weapons/:id', summary: 'Get Weapon By ID' })
-  @ApiResponse({ status: 200, description: 'Returns weapon object based on ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'Returns weapon object based on ID',
+  })
   @ApiParam({
     name: 'id',
     description: 'Enter the Elden Ring API ID for a weapon',
