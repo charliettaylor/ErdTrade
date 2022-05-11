@@ -1,33 +1,30 @@
-# Initial build stage for basic dependencies.
+### Initial build stage for basic dependencies.
 FROM node:17 AS builder
 
-# Set working directory
+### Set working directory
 WORKDIR /out/build
 
-# Grab package.json, package-lock.json and prisma
+### Grab package.json, package-lock.json and prisma
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+### Install dependencies
+RUN npm ci
 
-# Copy files over
+### Copy files over
 COPY . .
 
-# Set up .env inside of prisma folder for the schema
-# RUN cat > ./src/prisma/.env && echo ${DATABASE_URL} > ./src/prisma/.env
-
-# Setup the prisma client
+### Setup the prisma client
 RUN npx prisma generate --schema=./src/prisma/schema.prisma
 
-# Development container
+### Development container
 FROM node:17 AS development
 
-# Set the working directory and copy from builder
+### Set the working directory and copy from builder
 WORKDIR /app
 COPY --from=builder /out/build ./
 
-# Expose the correct ports
+### Expose the correct ports
 EXPOSE ${SERVER_PORT}
 
-# Start the development server
-CMD ["npm", "run", "start:dev"]
+### Start the development server
+CMD ["npm", "start"]
