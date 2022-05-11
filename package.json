@@ -1,0 +1,21 @@
+{
+  "name": "erdtrade",
+  "version": "1.0.0",
+  "description": "ErdTrade mono-repo.",
+  "license": "UNLICENSED",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Peekoe/ErdTrade.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Peekoe/ErdTrade/issues"
+  },
+  "homepage": "https://github.com/Peekoe/ErdTrade#readme",
+  "scripts": {
+    "server:dev": "bash config/build-server.sh development",
+    "server:prod": "bash config/build-server.sh production"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
