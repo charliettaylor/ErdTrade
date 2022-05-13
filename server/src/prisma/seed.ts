@@ -1,22 +1,23 @@
 import { PrismaClient } from '@prisma/client';
+import { faker } from '@faker-js/faker';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('Seeding!');
+  console.log('Clearing database...');
+  await prisma.user.deleteMany();
+  await prisma.$executeRaw`TRUNCATE TABLE "User" RESTART IDENTITY CASCADE`;
 
-  await prisma.ammos.create({
-    data: {
-      id: '17f69448ceel0i0a57bokoqz409yb',
-      name: 'Firebone Arrow',
-      image:
-        'https://eldenring.fanapis.com/images/ammos/17f69448ceel0i0a57bokoqz409yb.png',
-      description:
-        'Arrow whittled from animal bones. The tip is set alight before firing',
-      type: 'Pierce',
-      passive: 'Causes blood loss build up (55)',
-    },
-  });
+  console.log('Seeding!');
+  for (let i = 0; i < 100; i++) {
+    await prisma.user.create({
+      data: {
+        email: faker.internet.email(),
+        username: faker.internet.userName(),
+        password: faker.internet.password(),
+      },
+    });
+  }
 }
 
 main()
