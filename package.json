@@ -16,12 +16,6 @@
     "server:dev": "bash config/build-server.sh development",
     "server:prod": "bash config/build-server.sh production"
   },
-  "dependencies": {
-    "@prisma/client": "^3.14.0"
-  },
-  "devDependencies": {
-    "@types/node": "^17.0.33",
-    "ts-node": "^10.7.0",
-    "typescript": "^4.6.4"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }
