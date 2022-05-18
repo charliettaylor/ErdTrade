@@ -4,7 +4,7 @@
 
 To generate new fake data and overwrite db.json, use the following command:
 
-> npx ts-node generate.ts
+> ts-node generate.ts
 
 ## Connecting to Mock Server
 
