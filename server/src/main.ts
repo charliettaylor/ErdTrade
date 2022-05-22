@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
 import {
   SwaggerModule,
   DocumentBuilder,
@@ -6,9 +7,10 @@ import {
 } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { PrismaService } from './prisma/prisma.service';
-import expressSession from 'express-session';
+import * as expressSession from 'express-session';
 import { PrismaSessionStore } from '@quixo3/prisma-session-store';
 import * as CONSTANTS from './common/constants';
+import * as passport from 'passport';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -50,6 +52,16 @@ async function bootstrap() {
       }),
     }),
   );
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+    }),
+  );
+
+  app.use(passport.initialize());
+  app.use(passport.session());
 
   await app.listen(3000);
 }
