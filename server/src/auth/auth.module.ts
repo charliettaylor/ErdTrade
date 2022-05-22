@@ -4,7 +4,7 @@ import { PrismaModule } from '../prisma/prisma.module';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './local.strategy';
 import { AuthController } from './auth.controller';
-import { PasswordService } from './password.service';
+import { EncryptionService } from './encryption.service';
 import { JwtModule } from '@nestjs/jwt';
 import * as CONSTANTS from '../common/constants';
 
@@ -17,7 +17,7 @@ import * as CONSTANTS from '../common/constants';
       signOptions: { expiresIn: '60s' },
     }),
   ],
-  providers: [AuthService, LocalStrategy, PasswordService],
+  providers: [AuthService, LocalStrategy, EncryptionService],
   controllers: [AuthController],
 })
 export class AuthModule {}

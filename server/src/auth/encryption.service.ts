@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { hash, compare } from 'bcrypt';
 
 @Injectable()
-export class PasswordService {
+export class EncryptionService {
   private get bcryptSaltRounds(): string | number {
     const saltOrRounds = 8; // Should be stored in environment variable somewhere.
 
@@ -12,14 +12,11 @@ export class PasswordService {
       : saltOrRounds;
   }
 
-  async validatePassword(
-    password: string,
-    hashedPassword: string,
-  ): Promise<boolean> {
-    return compare(password, hashedPassword);
+  async validateHash(value: string, hashedValue: string): Promise<boolean> {
+    return compare(value, hashedValue);
   }
 
-  async hashPassword(password: string): Promise<string> {
-    return hash(password, this.bcryptSaltRounds);
+  async hash(value: string): Promise<string> {
+    return hash(value, this.bcryptSaltRounds);
   }
 }

@@ -1,7 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma } from '@prisma/client';
-import { PasswordService } from './password.service';
+import { EncryptionService } from './encryption.service';
 import { JwtService } from '@nestjs/jwt';
 import { GenerateTokenDto, TokenCookies, TokenResponse } from './auth.dto';
 import * as CONSTANTS from '../common/constants';
@@ -10,7 +10,7 @@ import * as CONSTANTS from '../common/constants';
 export class AuthService {
   constructor(
     private readonly prismaService: PrismaService,
-    private readonly passwordService: PasswordService,
+    private readonly encryptionService: EncryptionService,
     private readonly jwtService: JwtService,
   ) {}
 
@@ -18,7 +18,7 @@ export class AuthService {
     const user = await this.prismaService.user.findUnique({
       where: { username },
     });
-    const validPassword = this.passwordService.validatePassword(
+    const validPassword = this.encryptionService.validateEncryption(
       pass,
       user.password,
     );
@@ -32,9 +32,7 @@ export class AuthService {
   }
 
   async registerUser(payload: Prisma.UserCreateInput): Promise<TokenCookies> {
-    const hashedPassword = await this.passwordService.hashPassword(
-      payload.password,
-    );
+    const hashedPassword = await this.encryptionService.hash(payload.password);
 
     try {
       const { username, email, id } = await this.prismaService.user.create({
