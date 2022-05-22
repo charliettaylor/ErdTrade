@@ -18,7 +18,7 @@ export class AuthService {
     const user = await this.prismaService.user.findUnique({
       where: { username },
     });
-    const validPassword = this.encryptionService.validateEncryption(
+    const validPassword = this.encryptionService.validateHash(
       pass,
       user.password,
     );
