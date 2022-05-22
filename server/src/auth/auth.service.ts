@@ -14,13 +14,19 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async validateUser(username: string, pass: string): Promise<any> {
+  async noTokenLogin(username: string, pass: string): Promise<any> {
     const user = await this.prismaService.user.findUnique({
       where: { username },
     });
-    if (user && user.password === pass) {
-      const { password, ...result } = user;
-      return result;
+    const validPassword = this.passwordService.validatePassword(
+      pass,
+      user.password,
+    );
+    if (user && validPassword) {
+      const { email, username, id } = user;
+      const tokens = this.generateTokens({ email, username, id });
+      const cookies = this.cookifyTokens(tokens);
+      return cookies;
     }
     return null;
   }
