@@ -35,6 +35,8 @@
     "@prisma/client": "^3.14.0",
     "@quixo3/prisma-session-store": "^3.1.5",
     "bcrypt": "^5.0.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
     "express-session": "^1.17.3",
     "graphql-request": "^4.2.0",
     "passport-jwt": "^4.0.0",
