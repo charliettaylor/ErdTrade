@@ -13,10 +13,14 @@ export class EncryptionService {
   }
 
   async validateHash(value: string, hashedValue: string): Promise<boolean> {
-    return compare(value, hashedValue);
+    const valid = await compare(value, hashedValue);
+    if (!valid) {
+      throw new Error();
+    }
+    return valid;
   }
 
   async hash(value: string): Promise<string> {
-    return hash(value, this.bcryptSaltRounds);
+    return await hash(value, this.bcryptSaltRounds);
   }
 }
