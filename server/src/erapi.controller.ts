@@ -12,7 +12,7 @@ import {
 const NAMESPACE = 'ERAPI';
 
 @ApiTags('Elden Ring API')
-@Controller()
+@Controller('/erapi')
 export default class ERApiController {
   private client: GraphQLClient = new GraphQLClient(
     'https://eldenring.fanapis.com/api/graphql',
