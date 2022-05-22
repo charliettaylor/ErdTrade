@@ -1,22 +1,46 @@
-import { Controller, Post, UseGuards, Request, Body } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import {
+  Controller,
+  Post,
+  UseGuards,
+  Body,
+  HttpCode,
+  Req,
+  Get,
+} from '@nestjs/common';
 import { RegisterDto } from './auth.dto';
 import { AuthService } from './auth.service';
+import { CookieAuthGuard } from './cookieAuth.guard';
+import { LogInWithCredentialsGuard } from './logInWithCredentials.guard';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @HttpCode(201)
   @Post('/register')
-  async register(@Body() payload: RegisterDto, @Request() req) {
-    const cookies = await this.authService.registerUser(payload);
-    req.res.setHeader('Set-Cookie', [cookies.atc, cookies.rtc]);
-    req.res.status(201).send();
+  async register(@Body() payload: RegisterDto) {
+    return this.authService.registerUser(payload);
   }
 
-  @UseGuards(AuthGuard('local'))
+  @HttpCode(200)
+  @UseGuards(LogInWithCredentialsGuard)
   @Post('/login')
-  async login(@Request() req) {
-    return req.user;
+  async logIn(@Req() request) {
+    return request.user;
+  }
+
+  @HttpCode(200)
+  @UseGuards(CookieAuthGuard)
+  @Post('/logout')
+  async logOut(@Req() request) {
+    request.logOut();
+    request.session.cookie.maxAge = 0;
+  }
+
+  @HttpCode(200)
+  @UseGuards(CookieAuthGuard)
+  @Get('/authenticate')
+  async authenticate(@Req() request) {
+    return request.user;
   }
 }

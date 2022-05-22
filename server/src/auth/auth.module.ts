@@ -5,19 +5,11 @@ import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './local.strategy';
 import { AuthController } from './auth.controller';
 import { EncryptionService } from './encryption.service';
-import { JwtModule } from '@nestjs/jwt';
-import * as CONSTANTS from '../common/constants';
+import { SessionSerializer } from './session.serializer';
 
 @Module({
-  imports: [
-    PrismaModule,
-    PassportModule,
-    JwtModule.register({
-      secret: CONSTANTS.JWT_ACCESS_TOKEN_SECRET,
-      signOptions: { expiresIn: '60s' },
-    }),
-  ],
-  providers: [AuthService, LocalStrategy, EncryptionService],
+  imports: [PrismaModule, PassportModule.register({ session: true })],
+  providers: [AuthService, LocalStrategy, EncryptionService, SessionSerializer],
   controllers: [AuthController],
 })
 export class AuthModule {}
