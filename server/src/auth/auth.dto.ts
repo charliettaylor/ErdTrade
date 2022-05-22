@@ -1,21 +1,16 @@
-export interface RegisterDto {
+import { ApiProperty } from '@nestjs/swagger';
+import { IsEmail, IsNotEmpty } from 'class-validator';
+
+export class RegisterDto {
+  @ApiProperty()
+  @IsEmail()
   email: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
   username: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
   password: string;
-}
-
-export interface GenerateTokenDto {
-  email: string;
-  username: string;
-  id: number;
-}
-
-export interface TokenResponse {
-  access_token: string;
-  refresh_token: string;
-}
-
-export interface TokenCookies {
-  atc: string;
-  rtc: string;
 }
