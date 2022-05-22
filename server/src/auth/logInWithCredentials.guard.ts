@@ -5,7 +5,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class LogInWithCredentialsGuard extends AuthGuard('local') {
   /**
    * The function is called by NestJS when a user tries to access a route that is protected by the
-   * JwtAuthGuard.
+   * LoginWithCredentialsGuard.
    * The function calls the super.canActivate() function which returns a boolean value.
    * The function then calls the super.logIn() function which logs the user in.
    * The function then returns the boolean value that was returned by the super.canActivate() function.
