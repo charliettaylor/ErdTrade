@@ -23,19 +23,30 @@ export class ArmorsController {
   })
   @Get('/:id')
   public getArmorsById(@Param('id') id: string) {
-    return this.armorsService.armor({ id });
+    return this.armorsService.armor({ id: id });
   }
 
   @ApiOperation({ summary: 'Search Armors' })
   @ApiResponse({ status: 200, description: 'Returns specified armors' })
-  @ApiQuery({
-    name: 'search',
-    description: 'Enter name of armor to search for',
+  @ApiParam({
+    name: 'searchString',
+    description: 'String to search for armors with',
     allowEmptyValue: false,
     required: true,
   })
-  @Get('/')
-  public searchArmors(@Query('query') query: string) {
-    return this.armorsService.armors({ where: { name: query } });
+  @Get('/search/:searchString')
+  async searchArmors(@Param('searchString') searchString: string) {
+    return this.armorsService.armors({
+      where: {
+        OR: [
+          {
+            name: { contains: searchString },
+          },
+          {
+            description: { contains: searchString },
+          },
+        ],
+      },
+    });
   }
 }
