@@ -5,10 +5,13 @@ import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { HealthModule } from './health/health.module';
+import ERApiController from './erapi.controller';
+import { ArmorsModule } from './armors/armors.module';
 
 @Module({
-  imports: [PrismaModule, UserModule, AuthModule, HealthModule],
-  controllers: [AppController],
+  imports: [PrismaModule, UserModule, AuthModule, ArmorsModule, HealthModule],
+  controllers: [AppController, ERApiController],
   providers: [AppService],
 })
+
 export class AppModule {}
