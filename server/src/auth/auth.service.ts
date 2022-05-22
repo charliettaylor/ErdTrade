@@ -15,6 +15,13 @@ export class AuthService {
     private readonly encryptionService: EncryptionService,
   ) {}
 
+  /**
+   * Takes an email and a plain text password, and returns a user if the email and password are
+   * valid
+   * @param {string} email - The email address of the user.
+   * @param {string} plainTextPassword - The password that the user entered in the login form.
+   * @returns A user object
+   */
   async getAuthenticatedUser(
     email: string,
     plainTextPassword: string,
@@ -33,6 +40,12 @@ export class AuthService {
     }
   }
 
+  /**
+   * Takes a payload of type Prisma.UserCreateInput, hashes the password, creates a new user, and
+   * returns the user with a hashed password.
+   * @param payload - Prisma.UserCreateInput
+   * @returns User
+   */
   async registerUser(payload: Prisma.UserCreateInput): Promise<User> {
     const hashedPassword = await this.encryptionService.hash(payload.password);
     payload.password = hashedPassword;

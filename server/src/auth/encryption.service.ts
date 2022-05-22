@@ -12,6 +12,13 @@ export class EncryptionService {
       : saltOrRounds;
   }
 
+  /**
+   * Takes a plain text password and a hashed password, and returns true if the plain text password
+   * matches the hashed password
+   * @param {string} value - The value to be hashed.
+   * @param {string} hashedValue - The hashed value that you want to compare against.
+   * @returns A boolean value.
+   */
   async validateHash(value: string, hashedValue: string): Promise<boolean> {
     const valid = await compare(value, hashedValue);
     if (!valid) {
@@ -20,6 +27,11 @@ export class EncryptionService {
     return valid;
   }
 
+  /**
+   * Takes a string, hashes it, and returns the hashed string
+   * @param {string} value - The value to be hashed.
+   * @returns The hashed password.
+   */
   async hash(value: string): Promise<string> {
     return await hash(value, this.bcryptSaltRounds);
   }

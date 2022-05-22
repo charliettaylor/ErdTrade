@@ -6,7 +6,10 @@ import { CookieAuthGuard } from './auth/cookieAuth.guard';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  /* Example of a protected route. We now have access to AuthGuards; one which can tell if a user is logged in via cookies */
+  /*
+   * Example of a protected route. We now have access to AuthGuards.
+   * This particular one can tell if a user is logged in via examining cookies.
+   */
   @Get('/protected')
   @UseGuards(CookieAuthGuard)
   protected(): string {
