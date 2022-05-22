@@ -11,5 +11,6 @@ import { SessionSerializer } from './session.serializer';
   imports: [PrismaModule, PassportModule.register({ session: true })],
   providers: [AuthService, LocalStrategy, EncryptionService, SessionSerializer],
   controllers: [AuthController],
+  exports: [EncryptionService],
 })
 export class AuthModule {}
