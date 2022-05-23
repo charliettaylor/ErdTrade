@@ -17,6 +17,13 @@ model User {
   password String @db.VarChar(100)
 }
 
+model Session {
+  id String @id
+  sid String @unique
+  data String
+  expiresAt DateTime
+}
+
 model Armors {
   id String @id
   name String @unique
