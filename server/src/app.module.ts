@@ -6,19 +6,15 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { HealthModule } from './health/health.module';
 import ERApiController from './erapi.controller';
-import { ArmorsModule } from './armors/armors.module';
-import { AmmosModule } from './ammos/ammos.module';
-import { AshesModule } from './ashes/ashes.module';
+import { EldenRingModule } from './eldenring.module';
 
 @Module({
   imports: [
+    AuthModule,
+    EldenRingModule,
+    HealthModule,
     PrismaModule,
     UserModule,
-    AuthModule,
-    ArmorsModule,
-    AmmosModule,
-    AshesModule,
-    HealthModule,
   ],
   controllers: [AppController, ERApiController],
   providers: [AppService],
