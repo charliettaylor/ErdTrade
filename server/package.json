@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
-    "@nestjs/config": "^2.0.0",
+    "@nestjs/config": "^2.0.1",
     "@nestjs/core": "^8.0.0",
     "@nestjs/jwt": "^8.0.0",
     "@nestjs/passport": "^8.2.1",
@@ -92,7 +92,7 @@
       ".module.ts",
       "<rootDir>/src/app/main.ts",
       ".mock.ts"
-  ],
+    ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   }
