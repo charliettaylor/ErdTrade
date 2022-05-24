@@ -1,6 +1,5 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Logger, Controller, Get, Param, Query } from '@nestjs/common';
 import { gql, GraphQLClient } from 'graphql-request';
-import logging from '../utils/logging';
 import {
   ApiParam,
   ApiTags,
@@ -9,11 +8,11 @@ import {
   ApiQuery,
 } from '@nestjs/swagger';
 
-const NAMESPACE = 'ERAPI';
-
 @ApiTags('Elden Ring API')
 @Controller('/erapi')
 export default class ERApiController {
+  constructor(private logger: Logger) {}
+
   private client: GraphQLClient = new GraphQLClient(
     'https://eldenring.fanapis.com/api/graphql',
   );
@@ -32,20 +31,20 @@ export default class ERApiController {
 
   private async makeSearchRequest(route: string, param: string) {
     try {
-      logging.info(NAMESPACE, `Request made on ${route} for ${param}`);
+      this.logger.debug(`Request made on ${route} for ${param}`);
       return await this.client.request(this.searchQuery(route, param));
     } catch (error) {
-      logging.error(NAMESPACE, `Could not search for ${param} in ${route}`);
+      this.logger.error(`Could not search for ${param} in ${route}`);
       return { error: `Could not search for ${param}` };
     }
   }
 
   private async makeIdRequest(route: string, query: string) {
     try {
-      logging.info(NAMESPACE, `Request by ID made on ${route}`);
+      this.logger.debug(`Request by ID made on ${route}`);
       return await this.client.request(query);
     } catch (error) {
-      logging.error(NAMESPACE, `Could not get ${route} by ID`);
+      this.logger.error(`Could not get ${route} by ID`);
       return { error: `Could not find ${route} by ID` };
     }
   }

@@ -1,6 +1,6 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
-import { CookieAuthGuard } from './auth/cookieAuth.guard';
+import { CookieAuthGuard } from '../auth/cookieAuth.guard';
 
 @Controller()
 export class AppController {
