@@ -15,7 +15,5 @@
   "scripts": {
     "server:dev": "bash config/build-server.sh development",
     "server:prod": "bash config/build-server.sh production"
-  },
-  "dependencies": {},
-  "devDependencies": {}
+  }
 }
