@@ -14,14 +14,15 @@ export class ArmorsService {
     });
   }
 
-  async armors(params: {
-    skip?: number;
-    take?: number;
-    cursor?: Prisma.ArmorsWhereUniqueInput;
-    where?: Prisma.ArmorsWhereInput;
-    orderBy?: Prisma.ArmorsOrderByWithRelationInput;
-  }): Promise<Armors[]> {
-    return this.prisma.armors.findMany(params);
+  async armors(params: Prisma.ArmorsFindManyArgs): Promise<Armors[]> {
+    const { skip, take, cursor, where, orderBy } = params;
+    return this.prisma.armors.findMany({
+      skip,
+      take,
+      cursor,
+      where,
+      orderBy,
+    });
   }
 
   async createArmors(data: Prisma.ArmorsCreateInput): Promise<Armors> {

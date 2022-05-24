@@ -1,12 +1,7 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { ArmorsService } from './armors.service';
-import {
-  ApiParam,
-  ApiTags,
-  ApiResponse,
-  ApiOperation,
-  ApiQuery,
-} from '@nestjs/swagger';
+import { ApiParam, ApiTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
+import { Armors } from '@prisma/client';
 
 @ApiTags('Armors')
 @Controller('/armors')
@@ -35,16 +30,14 @@ export class ArmorsController {
     required: true,
   })
   @Get('/search/:searchString')
-  async searchArmors(@Param('searchString') searchString: string) {
+  async searchArmors(
+    @Param('searchString') searchString: string,
+  ): Promise<Armors[]> {
     return this.armorsService.armors({
       where: {
         OR: [
-          {
-            name: { contains: searchString },
-          },
-          {
-            description: { contains: searchString },
-          },
+          { name: { contains: searchString, mode: 'insensitive' } },
+          { description: { contains: searchString, mode: 'insensitive' } },
         ],
       },
     });

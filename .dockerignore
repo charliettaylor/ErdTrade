@@ -1,0 +1,20 @@
+# Logs
+logs
+*.log
+
+# Runtime
+pids
+*.pid
+
+# Dependency directory
+node_modules
+
+
+# Misc
+.git
+.vscode
+.gitignore
+*.md
+Dockerfile*
+docker-compose*.yml
+.*ignore

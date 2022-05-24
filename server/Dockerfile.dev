@@ -8,7 +8,7 @@ WORKDIR /out/build
 COPY package*.json ./
 
 ### Install dependencies
-RUN npm ci
+RUN npm install
 
 ### Copy files over
 COPY . .
