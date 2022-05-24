@@ -9,14 +9,15 @@ import { AppModule } from './app/app.module';
 import { PrismaService } from './prisma/prisma.service';
 import * as expressSession from 'express-session';
 import { PrismaSessionStore } from '@quixo3/prisma-session-store';
-import * as CONSTANTS from './common/constants';
 import * as passport from 'passport';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['error', 'warn', 'debug'],
   });
   const prismaService = app.get(PrismaService);
+  const configService = app.get(ConfigService);
   await prismaService.enableShutdownHooks(app);
 
   const customOptions: SwaggerCustomOptions = {
@@ -40,9 +41,12 @@ async function bootstrap() {
   app.use(
     expressSession({
       cookie: {
-        maxAge: 7 * 24 * 60 * 60 * 1000, // ms
+        maxAge: 86400000,
+        httpOnly: true,
+        sameSite: true,
+        secure: process.env.NODE_ENV !== 'development',
       },
-      secret: CONSTANTS.SESSION_SECRET,
+      secret: configService.get('SESSION_SECRET'),
       resave: true,
       saveUninitialized: true,
       store: new PrismaSessionStore(prismaService, {
