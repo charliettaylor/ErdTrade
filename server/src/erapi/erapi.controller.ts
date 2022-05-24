@@ -11,7 +11,7 @@ import {
 @ApiTags('Elden Ring API')
 @Controller('/erapi')
 export default class ERApiController {
-  constructor(private logger: Logger) {}
+  private logger = new Logger();
 
   private client: GraphQLClient = new GraphQLClient(
     'https://eldenring.fanapis.com/api/graphql',
