@@ -24,7 +24,7 @@ jobs:
 
       - name: Restore node_modules from cache
         id: restore-node-modules
-        run: cd server && npm ci
+        run: cd server && npm install
 
       - name: Run unit tests
         run: cd server && npm test
