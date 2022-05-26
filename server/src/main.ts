@@ -44,7 +44,7 @@ async function bootstrap() {
         maxAge: 86400000,
         httpOnly: true,
         sameSite: true,
-        secure: process.env.NODE_ENV !== 'development',
+        secure: configService.get('NODE_ENV') !== 'development',
       },
       secret: configService.get('SESSION_SECRET'),
       resave: true,
